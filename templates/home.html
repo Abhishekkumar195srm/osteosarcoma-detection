@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Osteosarcoma using CNN-DENSE MODEL</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+    />
+    <script
+      defer
+      src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <style>
+      .hero {
+        background: black url(static/images/bg.jpg) center / cover;
+      }
+
+      .file-name {
+        color: white;
+      }
+
+      .loader {
+        display: none;
+        margin: 1rem auto;
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      h1.title,
+      p.subtitle {
+        color: black;
+      }
+
+      form {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(255, 255, 255, 0.1);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Hero -->
+    <section class="hero is-fullheight">
+      <section class="section">
+        <div class="container has-text-centered">
+          <h1 class="title animate__animated animate__fadeInDown">
+            Bone Cancer Identification using CNN-DENSE MODEL
+          </h1>
+          <p class="subtitle animate__animated animate__fadeInUp">
+          </p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container has-text-centered">
+          <p class="subtitle" style="color: black">
+            Check if you have bone cancer!
+          </p>
+
+          <div class="animate__animated animate__fadeIn">
+            <form
+              id="upload-form"
+              action="/classify"
+              method="post"
+              enctype="multipart/form-data"
+              style="margin-top: 30px; width: 80%; text-align: center; margin: auto;"
+            >
+              <div class="file has-name is-centered">
+                <label class="file-label">
+                  <input
+                    class="file-input"
+                    type="file"
+                    id="image"
+                    name="image"
+                  />
+                  <span class="file-cta">
+                    <span class="file-label"> Upload an image </span>
+                  </span>
+                  <span class="file-name" id="file-name">No file chosen</span>
+                </label>
+              </div>
+
+              <div class="loader" id="loader"></div>
+
+              <br />
+              <input
+                type="submit"
+                value="Classify"
+                class="button is-white is-outlined"
+                name="image"
+                id="classify_button"
+              />
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <nav class="level">
+        <div class="level-item has-text-centered">
+          <div>
+            <img
+              src="static/images/icon.jpg"
+              width="200px"
+              height="200px"
+              alt="Icon"
+              style="max-height: 100%"
+            />
+          </div>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="bd-footer-link">
+      <div class="container">
+        <div class="columns">
+          <div class="column">
+            <article class="media notification has-background-white">
+              <div class="media-content">
+                <div class="content">
+                  <p class="subsubtitle"><strong>Contact</strong></p>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="column">
+            <article class="media notification has-background-white">
+              <div class="media-content">
+                <div class="content">
+                  <div class="columns">
+                    <!-- Optional future content -->
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const fileInput = document.querySelector("#image");
+      const fileName = document.querySelector("#file-name");
+      const loader = document.querySelector("#loader");
+
+      fileInput.addEventListener("change", () => {
+        fileName.textContent =
+          fileInput.files[0]?.name || "No file chosen";
+      });
+
+      document
+        .getElementById("upload-form")
+        .addEventListener("submit", function () {
+          loader.style.display = "block";
+        });
+    </script>
+
+    <script src="/static/script.js"></script>
+  </body>
+</html>

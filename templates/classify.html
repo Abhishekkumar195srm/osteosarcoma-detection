@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Osteosarcoma Identification using Deep Learning</title>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      background: url('/static/images/bg.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.85);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .title, .subtitle, h2, p {
+      color: white;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .prediction-img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    #labelDetails {
+      font-family: 'Open Sans', sans-serif;
+      color: #aaf0d1;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 1.2rem;
+      border-radius: 12px;
+      margin-top: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    #labelDetails p {
+      margin-bottom: 0.8rem;
+    }
+
+    #labelDetails strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .button {
+      margin-top: 1.5rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .columns {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay">
+    <section class="section">
+      <div class="container has-text-centered">
+        <h1 class="title is-2">Osteosarcoma Identification using CNN-DENSE MODEL</h1>
+        <p class="subtitle is-4"></p>
+      </div>
+
+      <div class="container">
+        <div class="columns is-vcentered is-variable is-8">
+          <!-- Image Column -->
+          <div class="column is-half has-text-centered">
+            <figure class="image">
+              <img class="prediction-img" src="{{ url_for('send_file', filename=image_file_name) }}" alt="Prediction Image">
+            </figure>
+          </div>
+
+          <!-- Prediction Column -->
+          <div class="column is-half">
+            <div class="card">
+              {% set safe_label = label.lower().strip() %}
+              <h2 class="title is-4">This is a <span style="font-weight: bold; color:#ffd700;">{{ label }}</span></h2>
+              <h2 class="subtitle is-5">Confidence: <span style="font-weight: bold; color:#ffd700;">{{ prob }}</span></h2>
+
+              <!-- Label Details -->
+              <div id="labelDetails">
+                {% if safe_label == 'healthy knee' %}
+                  <p><strong>WET-STATE-USES:</strong> Maintain joint health with regular exercise and a balanced diet.</p>
+                  <p><strong>DRY-STATE-USES:</strong> Focus on preventive care such as maintaining a healthy weight and joint-friendly activities like swimming or yoga.</p>
+                {% elif safe_label == 'doubtful' %}
+                  <p><strong>WET-STATE-USES:</strong> Gentle stretching and mobility exercises can help maintain flexibility.</p>
+                  <p><strong>DRY-STATE-USES:</strong> Monitor symptoms and consider lifestyle adjustments to prevent progression.</p>
+                {% elif safe_label == 'minimal' %}
+                  <p><strong>WET-STATE-USES:</strong> Apply warm compresses to reduce stiffness and mild pain relief strategies like stretching and physiotherapy.</p>
+                  <p><strong>DRY-STATE-USES:</strong> Use joint-supporting supplements and light physical activity to prevent progression.</p>
+                {% elif safe_label == 'moderate' %}
+                  <p><strong>WET-STATE-USES:</strong> Hydrotherapy or hot/cold therapy can help reduce inflammation and improve mobility.</p>
+                  <p><strong>DRY-STATE-USES:</strong> Weight management and non-impact exercises to reduce strain on the knee.</p>
+                {% elif safe_label == 'severe' %}
+                  <p><strong>WET-STATE-USES:</strong> Apply warm compresses and consider physical therapy for pain relief and maintaining mobility.</p>
+                  <p><strong>DRY-STATE-USES:</strong> Consult a specialist for advanced treatment options including braces, medications, or surgery.</p>
+                {% endif %}
+              </div>
+
+              <a href="/" class="button is-white is-outlined">Back to Home</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
